@@ -37,13 +37,13 @@
             max-width: 100%; 
             height: auto; 
             border-radius: 8px; 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* 다크 모드에 맞는 그림자 */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
         }
         section { 
             background: var(--card-bg); 
             padding: 30px; 
             margin-top: 20px; 
-            border-radius: 12px; /* 더 둥근 모서리 */
+            border-radius: 12px;
         }
         footer { 
             text-align: center; 
@@ -60,13 +60,15 @@
             background-color: var(--card-bg);
             border-radius: 8px 8px 0 0;
             margin-bottom: 0;
+            overflow-x: auto; /* 탭이 많아지면 스크롤 가능하도록 */
         }
         .tab-nav button { 
+            flex-shrink: 0; 
             background-color: var(--card-bg); 
             border: none; 
             outline: none; 
             cursor: pointer; 
-            padding: 15px 25px; /* 더 넓은 패딩 */
+            padding: 15px 25px; 
             transition: all 0.3s ease; 
             font-size: 16px;
             font-weight: 600;
@@ -79,7 +81,7 @@
         }
         .tab-nav button.active { 
             color: var(--primary-color); 
-            border-bottom: 3px solid var(--primary-color); /* 활성화 탭 강조 */
+            border-bottom: 3px solid var(--primary-color);
             background-color: var(--bg-color);
         }
 
@@ -94,24 +96,23 @@
         }
         .tab-content.active { display: block; }
 
-        /* [수정] Hobbies 미디어 그리드: 2열 배치로 이미지 축소 */
+        /* Hobbies 미디어 그리드: 2열 배치로 이미지 축소 */
         .hobby-grid { 
             display: grid; 
-            grid-template-columns: 1fr 1fr; /* 두 개의 사진이 한 줄에 보이도록 2열 설정 */
+            grid-template-columns: 1fr 1fr; 
             gap: 30px; 
             margin-top: 20px; 
         }
-        /* 모바일 최적화: 600px 미만 화면에서는 다시 1열 */
         @media (max-width: 600px) {
             .hobby-grid { grid-template-columns: 1fr; }
         }
         .hobby-grid img { 
-            width: 100%; /* 그리드 열 안에 꽉 채우기 */
+            width: 100%; 
             height: auto; 
-            margin: 0; /* 중앙 정렬 제거, 그리드 내 배치 */
+            margin: 0; 
         }
         .hobby-grid .video-container { 
-            grid-column: span 2; /* 영상은 2개 열을 모두 차지 (더 크게 보이도록) */
+            grid-column: span 2; 
             position: relative; 
             padding-bottom: 56.25%; 
             height: 0; 
@@ -125,6 +126,23 @@
         /* About Me 프로필 이미지 중앙 정렬 */
         .profile-img-container { text-align: center; }
         .profile-img-container img { max-width: 250px; margin-bottom: 20px; display: inline-block; }
+
+        /* [추가] AI 영상 전용 스타일 */
+        .large-video { 
+            position: relative; 
+            padding-bottom: 56.25%; /* 16:9 비율 유지 */
+            height: 0; 
+            overflow: hidden; 
+            margin-top: 20px;
+            border-radius: 8px; 
+        }
+        .large-video iframe { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+        }
     </style>
 </head>
 <body>
@@ -136,6 +154,7 @@
     <div class="tab-nav">
         <button class="tab-link active" onclick="openTab(event, 'AboutMe')">About Me</button>
         <button class="tab-link" onclick="openTab(event, 'Hobbies')">Interests & Hobbies</button>
+        <button class="tab-link" onclick="openTab(event, 'AIVideo')">AI Self-Intro Video</button>
     </div>
 
     <main>
@@ -144,11 +163,12 @@
                 <img src="https://i.postimg.cc/ry1kcbc8/jeungmyeongsajin.jpg" alt="프로필 사진">
             </div>
             <h2>자기소개</h2>
-<p>한국외국어대학교 Social Science & AI 융합학부 1학년에 재학 중입니다. 저는 데이터가 사회 현상을 분석하고, 긍정적인 변화를 이끌어내는 잠재력에 깊은 관심을 가지고 있습니다. 사회과학적 통찰력과 데이터 기술을 결합하여 복잡한 사회 문제를 해결하는 방법을 배우고 있습니다.</p>
-<p>앞으로의 학습과 경험을 통해 다음과 같은 전문가로 성장하는 것을 목표로 합니다.</p>
+<p>안녕하십니까. 한국외국어대학교 사회과학 & AI 융합학부 1학년에 재학 중입니다. 저는 데이터가 사회 현상을 분석하고 긍정적인 변화를 이끌어내는 잠재력에 깊은 관심을 가지고 있습니다. 사회과학적 통찰력과 AI 기술을 결합하여 복잡한 문제에 대한 실질적인 해결책을 제시하는 전문가로 성장하는 것이 저의 목표입니다.</p>
+<p>앞으로 학업을 통해 다음과 같은 핵심 역량을 갖춘 인재로 성장하고자 합니다.</p>
 <ul>
-    <li>데이터를 기반으로 사회를 정밀하게 분석하고 예측하는 전문가</li>
-    <li>AI 기술을 활용하여 사회 문제 해결에 기여하는 실용적인 솔루션을 구축하는 개발자</li>
+  <li>데이터를 기반으로 사회를 깊이 있게 이해하고 분석하는 능력</li>
+  <li>AI 기술을 활용하여 자동화 파이프라인과 같은 실용적인 솔루션을 구축하는 역량</li>
+  <li>기술과 인문사회학적 지식을 융합하여 새로운 가치를 창출하는 시각</li>
 </ul>
 ```
             
@@ -177,13 +197,22 @@
                 </div>
             </div>
         </div>
+
+        <div id="AIVideo" class="tab-content">
+            <h2>AI Self-Introduction Video 🤖</h2>
+            <p>AI 기술을 활용하여 제작한 자기소개 영상입니다. 저의 역량과 포부를 시각적으로 확인해 보세요.</p>
+            
+            <div class="large-video">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/w4kdI2zy99g?si=hZCQM6a7EAGmi_S0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
         
-        </main>
+    </main>
     
     <footer>Powered by n8n, Google Gemini, and GitHub.</footer>
 
     <script>
-        // 기존 탭 전환 스크립트 (수정 불필요)
+        // 탭 전환 스크립트 (AIVideo 탭까지 포함하여 작동)
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
