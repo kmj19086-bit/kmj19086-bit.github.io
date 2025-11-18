@@ -60,7 +60,7 @@
             background-color: var(--card-bg);
             border-radius: 8px 8px 0 0;
             margin-bottom: 0;
-            overflow-x: auto; /* 탭이 많아지면 스크롤 가능하도록 */
+            overflow-x: auto; /* 데스크톱에서 탭이 많아지면 스크롤 가능 */
         }
         .tab-nav button { 
             flex-shrink: 0; 
@@ -127,10 +127,10 @@
         .profile-img-container { text-align: center; }
         .profile-img-container img { max-width: 250px; margin-bottom: 20px; display: inline-block; }
 
-        /* [추가] AI 영상 전용 스타일 */
+        /* AI 영상 전용 스타일 */
         .large-video { 
             position: relative; 
-            padding-bottom: 56.25%; /* 16:9 비율 유지 */
+            padding-bottom: 56.25%; 
             height: 0; 
             overflow: hidden; 
             margin-top: 20px;
@@ -142,6 +142,36 @@
             left: 0; 
             width: 100%; 
             height: 100%; 
+        }
+
+        /* [⭐ 모바일 최적화 추가: 탭 메뉴 수직 전환 ⭐] */
+        @media (max-width: 600px) {
+            .tab-nav {
+                flex-direction: column; /* 탭을 가로에서 세로로 변경 */
+                border-radius: 8px;
+                border-bottom: none;
+            }
+            .tab-nav button {
+                width: 100%; /* 너비를 꽉 채우기 */
+                text-align: left; /* 왼쪽 정렬 */
+                border-bottom: 1px solid var(--border-color); /* 버튼 사이에 선 추가 */
+                padding: 10px 15px; /* 모바일에서 패딩 조정 */
+                background-color: var(--card-bg);
+            }
+            .tab-nav button:last-child {
+                border-bottom: none; /* 마지막 버튼 아래 선 제거 */
+            }
+            .tab-nav button.active {
+                /* 세로 메뉴에서는 활성화 표시를 유지하면서 배경색으로 강조 */
+                background-color: #333; 
+                border-left: 5px solid var(--primary-color); /* 왼쪽에 세련된 강조선 추가 */
+                border-bottom: 1px solid var(--border-color); 
+            }
+            /* 활성화된 탭의 윗 경계선 제거 */
+            .tab-content {
+                border-top: 1px solid var(--border-color); 
+                border-radius: 0 0 8px 8px;
+            }
         }
     </style>
 </head>
@@ -203,7 +233,7 @@
             <p>AI 기술을 활용하여 제작한 자기소개 영상입니다. 저의 역량과 포부를 시각적으로 확인해 보세요.</p>
             
             <div class="large-video">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/w4kdI2zy99g?si=hZCQM6a7EAGmi_S0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/exampleVideoID?controls=0" title="AI Self-Intro Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </div>
         
@@ -212,7 +242,7 @@
     <footer>Powered by n8n, Google Gemini, and GitHub.</footer>
 
     <script>
-        // 탭 전환 스크립트 (AIVideo 탭까지 포함하여 작동)
+        // 탭 전환 스크립트 
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
