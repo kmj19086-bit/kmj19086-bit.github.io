@@ -2,134 +2,203 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>강민준의 AI 포트폴리오</title>
-    <style>
-        /* 기본 스타일 */
-        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; padding: 2em; max-width: 800px; margin: auto; background: #f9f9f9; }
-        header { text-align: center; border-bottom: 2px solid #ddd; padding-bottom: 20px; }
-        h1 { color: #003366; } /* HUFS 색상 테마 */
-        h2 { color: #333; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        img, iframe { max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        section { background: #fff; padding: 25px; margin-top: 20px; border-radius: 8px; }
-        footer { text-align: center; margin-top: 30px; font-size: 0.9em; color: #777; }
-        .contact-info { margin-top: 20px; padding-top: 15px; border-top: 1px dashed #ccc; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강민준의 AI 포트폴리오 (Dark Mode)</title>
+    <style>
+        /* 다크 모드 기본 스타일 */
+        :root {
+            --primary-color: #007bff; /* 포인트 색상 (파란색) */
+            --bg-color: #1a1a1a; /* 배경색 */
+            --text-color: #e0e0e0; /* 기본 글자색 */
+            --card-bg: #2a2a2a; /* 카드/섹션 배경색 */
+            --border-color: #444; /* 경계선 색상 */
+            --header-color: #00bcd4; /* 제목 색상 */
+        }
 
-        /* [수정] 탭(Tab) 메뉴 스타일: 클릭 가능한 버튼처럼 명확하게 */
-        .tab-nav { display: flex; border-bottom: 2px solid #ddd; margin-bottom: 0; background-color: white; }
-        .tab-nav button { 
-            background-color: inherit; 
-            border: none; 
-            outline: none; 
-            cursor: pointer; /* 손가락 모양 커서로 클릭 가능 명시 */
-            padding: 14px 20px; 
-            transition: 0.3s; 
-            font-size: 16px;
-            font-weight: bold;
-            color: #555;
-            border-bottom: 2px solid transparent; /* 활성화를 위한 공간 */
-        }
-        .tab-nav button:hover { background-color: #f1f1f1; color: #003366; }
-        .tab-nav button.active { 
-            color: #003366; 
-            border-bottom: 2px solid #003366; /* 활성화된 탭 강조 */
-            background-color: #fff;
-        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height: 1.6; 
+            padding: 2em; 
+            max-width: 900px; 
+            margin: auto; 
+            background: var(--bg-color); 
+            color: var(--text-color);
+        }
+        header { 
+            text-align: center; 
+            border-bottom: 2px solid var(--border-color); 
+            padding-bottom: 20px; 
+            margin-bottom: 30px;
+        }
+        h1 { color: var(--header-color); font-size: 2.5em; } 
+        h2 { color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 5px; margin-top: 30px; }
+        img, iframe { 
+            max-width: 100%; 
+            height: auto; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* 다크 모드에 맞는 그림자 */
+        }
+        section { 
+            background: var(--card-bg); 
+            padding: 30px; 
+            margin-top: 20px; 
+            border-radius: 12px; /* 더 둥근 모서리 */
+        }
+        footer { 
+            text-align: center; 
+            margin-top: 40px; 
+            font-size: 0.8em; 
+            color: #888; 
+        }
+        .contact-info { margin-top: 20px; padding-top: 15px; border-top: 1px dashed var(--border-color); }
 
-        /* 탭(Tab) 콘텐츠 스타일 */
-        .tab-content { display: none; padding: 25px; border: 1px solid #ddd; border-top: none; background: white; border-radius: 0 0 8px 8px; }
-        .tab-content.active { display: block; } /* 활성화된 탭만 보이기 */
+        /* [개선] 탭(Tab) 메뉴 스타일: 클릭 가능 명확화 및 다크 모드 적용 */
+        .tab-nav { 
+            display: flex; 
+            border-bottom: 2px solid var(--border-color); 
+            background-color: var(--card-bg);
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+        }
+        .tab-nav button { 
+            background-color: var(--card-bg); 
+            border: none; 
+            outline: none; 
+            cursor: pointer; 
+            padding: 15px 25px; /* 더 넓은 패딩 */
+            transition: all 0.3s ease; 
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-color);
+            border-bottom: 3px solid transparent; 
+        }
+        .tab-nav button:hover { 
+            background-color: #333; 
+            color: var(--primary-color);
+        }
+        .tab-nav button.active { 
+            color: var(--primary-color); 
+            border-bottom: 3px solid var(--primary-color); /* 활성화 탭 강조 */
+            background-color: var(--bg-color);
+        }
 
-        /* [수정] Hobbies 미디어 그리드 및 이미지 크기 축소 */
-        .hobby-grid { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 20px; }
-        .hobby-grid img { 
-            width: 50%; /* 이미지 크기를 절반(50%)으로 축소 */
-            height: auto; 
-            margin: 10px auto; /* 가운데 정렬 */
-            display: block; 
-        }
-        @media (min-width: 600px) {
-            .hobby-grid { grid-template-columns: 1fr 1fr; }
-            .hobby-grid img { width: 100%; } /* 넓은 화면에서는 다시 크게 (반응형) */
-        }
+        /* 탭(Tab) 콘텐츠 스타일 */
+        .tab-content { 
+            display: none; 
+            padding: 30px; 
+            border: 1px solid var(--border-color); 
+            border-top: none; 
+            background: var(--bg-color); 
+            border-radius: 0 0 8px 8px; 
+        }
+        .tab-content.active { display: block; }
 
-        .hobby-grid .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
-        .hobby-grid .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-    </style>
+        /* [수정] Hobbies 미디어 그리드: 2열 배치로 이미지 축소 */
+        .hobby-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; /* 두 개의 사진이 한 줄에 보이도록 2열 설정 */
+            gap: 30px; 
+            margin-top: 20px; 
+        }
+        /* 모바일 최적화: 600px 미만 화면에서는 다시 1열 */
+        @media (max-width: 600px) {
+            .hobby-grid { grid-template-columns: 1fr; }
+        }
+        .hobby-grid img { 
+            width: 100%; /* 그리드 열 안에 꽉 채우기 */
+            height: auto; 
+            margin: 0; /* 중앙 정렬 제거, 그리드 내 배치 */
+        }
+        .hobby-grid .video-container { 
+            grid-column: span 2; /* 영상은 2개 열을 모두 차지 (더 크게 보이도록) */
+            position: relative; 
+            padding-bottom: 56.25%; 
+            height: 0; 
+            overflow: hidden; 
+        }
+        @media (max-width: 600px) {
+            .hobby-grid .video-container { grid-column: span 1; }
+        }
+        .hobby-grid .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        /* About Me 프로필 이미지 중앙 정렬 */
+        .profile-img-container { text-align: center; }
+        .profile-img-container img { max-width: 250px; margin-bottom: 20px; display: inline-block; }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>강민준</h1>
-        <p>Social Science & AI 융합학부 @ 한국외국어대학교</p>
-    </header>
+    <header>
+        <h1>강민준</h1>
+        <p>Social Science & AI 융합학부 @ 한국외국어대학교</p>
+    </header>
 
-    <div class="tab-nav">
-        <button class="tab-link active" onclick="openTab(event, 'AboutMe')">About Me</button>
-        <button class="tab-link" onclick="openTab(event, 'Hobbies')">Interests & Hobbies</button>
-    </div>
+    <div class="tab-nav">
+        <button class="tab-link active" onclick="openTab(event, 'AboutMe')">About Me</button>
+        <button class="tab-link" onclick="openTab(event, 'Hobbies')">Interests & Hobbies</button>
+    </div>
 
-    <main>
-        <div id="AboutMe" class="tab-content active">
-            <img src="https://i.postimg.cc/ry1kcbc8/jeungmyeongsajin.jpg" alt="프로필 사진" style="max-width: 300px; margin-bottom: 20px;">
-                        <h2>About Me</h2>
-<p>안녕하세요. 한국외국어대학교 Social Science & AI 융합학부에서 공부하고 있는 1학년 학생입니다. 저는 기술과 인간 사회의 교차점에서 데이터가 세상을 분석하고 긍정적으로 변화시키는 잠재력에 큰 매력을 느끼고 있습니다. 현재 사회과학적 통찰력과 AI 기술을 결합하는 방법을 배우며, 이론을 넘어 실제적인 문제 해결 능력을 기르고자 합니다. 앞으로 AI 자동화 파이프라인을 직접 구축하며 데이터 기반의 솔루션을 만들어내는 전문가로 성장하고 싶습니다.</p>
-
-<h2>Interests & Hobbies</h2>
+    <main>
+        <div id="AboutMe" class="tab-content active">
+            <div class="profile-img-container">
+                <img src="https://i.postimg.cc/ry1kcbc8/jeungmyeongsajin.jpg" alt="프로필 사진">
+            </div>
+            <h2>자기소개</h2>
+<p>한국외국어대학교 Social Science & AI 융합학부 1학년에 재학 중입니다. 저는 데이터가 사회 현상을 분석하고, 긍정적인 변화를 이끌어내는 잠재력에 깊은 관심을 가지고 있습니다. 사회과학적 통찰력과 데이터 기술을 결합하여 복잡한 사회 문제를 해결하는 방법을 배우고 있습니다.</p>
+<p>앞으로의 학습과 경험을 통해 다음과 같은 전문가로 성장하는 것을 목표로 합니다.</p>
 <ul>
-  <li><strong>스노우보드:</strong> 겨울의 설원을 누비며 역동적인 에너지를 얻습니다.</li>
-  <li><strong>헬스:</strong> 꾸준한 자기 관리를 통해 건강한 몸과 마음을 유지합니다.</li>
-  <li><strong>클라리넷 연주:</strong> 아름다운 선율을 통해 감성을 표현하고 창의적인 영감을 얻습니다.</li>
+    <li>데이터를 기반으로 사회를 정밀하게 분석하고 예측하는 전문가</li>
+    <li>AI 기술을 활용하여 사회 문제 해결에 기여하는 실용적인 솔루션을 구축하는 개발자</li>
 </ul>
 ```
-            
-            <div class="contact-info">
-                <h2>Contact</h2>
-                <p><strong>Email:</strong> kmj19086@hufs.ac.kr</p>
-                <p><strong>Phone:</strong> 010-4593-1336</p>
-            </div>
-        </div>
+            
+            <div class="contact-info">
+                <h2>Contact</h2>
+                <p><strong>Email:</strong> kmj19086@hufs.ac.kr</p>
+                <p><strong>Phone:</strong> 010-4593-1336</p>
+            </div>
+        </div>
 
-                <div id="Hobbies" class="tab-content">
-            <h2>My Hobbies in Action</h2>
-            <div class="hobby-grid">
-                                <div>
-                    <h3>헬스 (Fitness)</h3>
-                    <img src="https://i.postimg.cc/Kv6shbQk/helseu-1.jpg" alt="헬스 사진">
-                </div>
-                                <div>
-                    <h3>스노우보드 (Snowboarding)</h3>
-                    <img src="https://i.postimg.cc/wv0SMY1F/seunoubodeu1.jpg" alt="스노우보드 사진" style="margin-bottom: 20px;">
-                    <div class="video-container">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/gpNnGS_u4WQ?si=P2HBTEWhGs91g8g3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        </main>
-    
-    <footer>Powered by n8n, Google Gemini, and GitHub.</footer>
+        <div id="Hobbies" class="tab-content">
+            <h2>My Hobbies in Action</h2>
+            <p>취미 활동을 통해 얻는 에너지와 영감을 소개합니다.</p>
+            
+            <div class="hobby-grid">
+                <div>
+                    <h3>💪 헬스 (Fitness)</h3>
+                    <img src="https://i.postimg.cc/Kv6shbQk/helseu-1.jpg" alt="헬스 사진">
+                </div>
+                <div>
+                    <h3>🏂 스노우보드 (Snowboarding)</h3>
+                    <img src="https://i.postimg.cc/wv0SMY1F/seunoubodeu1.jpg" alt="스노우보드 사진">
+                </div>
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/gpNnGS_u4WQ?si=P2HBTEWhGs91g8g3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        
+        </main>
+    
+    <footer>Powered by n8n, Google Gemini, and GitHub.</footer>
 
-    <script>
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            // 모든 탭 콘텐츠를 숨김
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            // 모든 탭 버튼의 "active" 클래스를 제거
-            tablinks = document.getElementsByClassName("tab-link");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            // 현재 클릭된 탭과 버튼만 활성화
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-        // 페이지 로드 시 첫 번째 탭을 기본으로 열기
-        document.getElementById("AboutMe").style.display = "block";
-    </script>
+    <script>
+        // 기존 탭 전환 스크립트 (수정 불필요)
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        // 페이지 로드 시 첫 번째 탭 열기
+        document.getElementById("AboutMe").style.display = "block";
+    </script>
 </body>
 </html>
